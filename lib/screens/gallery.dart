@@ -23,20 +23,26 @@ class GalleryPage extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(
-                child: Text(
-              'No images found.',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ));
+              child: Text(
+                'No images found.',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            );
           } else {
-            return ListView.builder(
+            return GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 10.0,
+                mainAxisSpacing: 10.0,
+              ),
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 String imagePath = snapshot.data![index]['image_path'];
                 return Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Image.file(
                     File(imagePath),
-                    height: 362,
+                    fit: BoxFit.cover,
                   ),
                 );
               },
